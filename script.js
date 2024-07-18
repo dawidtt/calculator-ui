@@ -28,7 +28,27 @@ function operate(operator, firstNumber, secondNumber) {
       console.log("you have to give operator");
   }
 }
+let operator = false;
+let tempNumber = "";
+let firstNumber = "";
+let secondNumber = "";
 
-let operator = "";
-let firstNumber = 0;
-let secondNumber = 0;
+function displayNumbers(number) {
+  const resultPath = document.querySelector("#result p");
+  tempNumber = number;
+  if (!operator) {
+    firstNumber = firstNumber.concat(tempNumber);
+    if (resultPath.textContent === "0") resultPath.textContent = "";
+    resultPath.textContent += tempNumber;
+  } else secondNumber = secondNumber.concat(tempNumber);
+  console.log(firstNumber);
+  console.log(secondNumber);
+}
+
+const numbersNodeList = document.querySelectorAll(".number");
+console.log(numbersNodeList);
+const numbersArray = Array.from(numbersNodeList);
+console.log(numbersArray);
+for (const number of numbersArray) {
+  number.addEventListener("click", () => displayNumbers(number.textContent));
+}
