@@ -30,12 +30,6 @@ function operate(operator, innerFirstNumber, innerSecondNumber) {
       return "0";
   }
 }
-const resultPath = document.querySelector("#result p");
-let isOperatorChosen = false;
-let operator = "";
-let tempNumber = "";
-let firstNumber = "";
-let secondNumber = "";
 
 function displayNumbers(number) {
   tempNumber = number;
@@ -47,12 +41,11 @@ function displayNumbers(number) {
     secondNumber = secondNumber.concat(tempNumber);
     resultPath.textContent += tempNumber;
   }
-  console.log(firstNumber);
-  console.log(secondNumber);
 }
 
 function displayOperator(newOperator) {
-  if (firstNumber != "" && !isOperatorChosen) {
+  if (firstNumber === "") firstNumber = "0";
+  if (!isOperatorChosen) {
     operator = newOperator;
     resultPath.textContent += operator;
     isOperatorChosen = true;
@@ -72,22 +65,36 @@ function displayResult() {
   operator = "";
   firstNumber = result.toString();
   secondNumber = "";
-  console.log(firstNumber);
-  console.log(secondNumber);
 }
 
+function clearResult() {
+  resultPath.textContent = "0";
+  isOperatorChosen = false;
+  operator = "";
+  tempNumber = "";
+  firstNumber = "";
+  secondNumber = "";
+}
+
+const resultPath = document.querySelector("#result p");
+let isOperatorChosen = false;
+let operator = "";
+let tempNumber = "";
+let firstNumber = "";
+let secondNumber = "";
+
 const numbersNodeList = document.querySelectorAll(".number");
-console.log(numbersNodeList);
+
 const numbersArray = Array.from(numbersNodeList);
-console.log(numbersArray);
+
 for (const number of numbersArray) {
   number.addEventListener("click", () => displayNumbers(number.textContent));
 }
 
 const operatorsPathsNodeList = document.querySelectorAll(".operator");
-console.log(operatorsPathsNodeList);
+
 const operatorsPathsArray = Array.from(operatorsPathsNodeList);
-console.log(operatorsPathsArray);
+
 for (const operator of operatorsPathsArray) {
   operator.addEventListener("click", () =>
     displayOperator(operator.textContent)
@@ -96,3 +103,6 @@ for (const operator of operatorsPathsArray) {
 
 const equalPath = document.querySelector(".equal");
 equalPath.addEventListener("click", displayResult);
+
+const acBtnPath = document.querySelector(".ac");
+acBtnPath.addEventListener("click", clearResult);
