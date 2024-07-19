@@ -14,20 +14,23 @@ function divide(firstNumber, secondNumber) {
   return firstNumber / secondNumber;
 }
 
-function operate(operator, firstNumber, secondNumber) {
+function operate(operator, innerFirstNumber, innerSecondNumber) {
   switch (operator) {
     case "+":
-      return add(firstNumber, secondNumber);
+      return add(innerFirstNumber, innerSecondNumber);
     case "-":
-      return subtract(firstNumber, secondNumber);
+      return subtract(innerFirstNumber, innerSecondNumber);
     case "*":
-      return multiply(firstNumber, secondNumber);
+      return multiply(innerFirstNumber, innerSecondNumber);
     case "/":
-      return divide(firstNumber, secondNumber);
+      return divide(innerFirstNumber, innerSecondNumber);
     default:
       console.log("you have to give operator");
+      firstNumber = "";
+      return "0";
   }
 }
+const resultPath = document.querySelector("#result p");
 let isOperatorChosen = false;
 let operator = "";
 let tempNumber = "";
@@ -35,7 +38,6 @@ let firstNumber = "";
 let secondNumber = "";
 
 function displayNumbers(number) {
-  const resultPath = document.querySelector("#result p");
   tempNumber = number;
   if (!isOperatorChosen) {
     firstNumber = firstNumber.concat(tempNumber);
@@ -50,12 +52,21 @@ function displayNumbers(number) {
 }
 
 function displayOperator(newOperator) {
-  const resultPath = document.querySelector("#result p");
   if (firstNumber != "" && !isOperatorChosen) {
     operator = newOperator;
     resultPath.textContent += operator;
     isOperatorChosen = true;
   }
+}
+
+function displayResult() {
+  const result = operate(operator, firstNumber, secondNumber);
+  resultPath.textContent = result;
+  isOperatorChosen = false;
+  firstNumber = result.toString();
+  secondNumber = "";
+  console.log(firstNumber);
+  console.log(secondNumber);
 }
 
 const numbersNodeList = document.querySelectorAll(".number");
@@ -75,3 +86,6 @@ for (const operator of operatorsPathsArray) {
     displayOperator(operator.textContent)
   );
 }
+
+const equalPath = document.querySelector(".equal");
+equalPath.addEventListener("click", displayResult);
