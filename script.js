@@ -49,6 +49,12 @@ function displayOperator(newOperator) {
     operator = newOperator;
     resultPath.textContent += operator;
     isOperatorChosen = true;
+  } else if (isOperatorChosen && secondNumber === "") {
+    operator = newOperator;
+    const currentResult = resultPath.textContent;
+    resultPath.textContent =
+      currentResult.slice(0, currentResult.length - 1) + operator;
+    isOperatorChosen = true;
   }
 }
 
@@ -74,6 +80,16 @@ function clearResult() {
   tempNumber = "";
   firstNumber = "";
   secondNumber = "";
+}
+
+function reverseFirstNumber() {
+  if (firstNumber !== "" && firstNumber != "0" && isOperatorChosen === false) {
+    if (firstNumber.charAt(0) === "-") firstNumber = firstNumber.slice(1);
+    else firstNumber = "-".concat(firstNumber);
+    resultPath.textContent = firstNumber;
+  }
+
+  console.log("halo");
 }
 
 const resultPath = document.querySelector("#result p");
@@ -106,3 +122,6 @@ equalPath.addEventListener("click", displayResult);
 
 const acBtnPath = document.querySelector(".ac");
 acBtnPath.addEventListener("click", clearResult);
+
+const reverseBtnPath = document.querySelector(".reverse");
+reverseBtnPath.addEventListener("click", reverseFirstNumber);
