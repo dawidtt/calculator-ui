@@ -1,5 +1,5 @@
 function add(firstNumber, secondNumber) {
-  const calc = firstNumber + secondNumber;
+  return firstNumber + secondNumber;
 }
 
 function subtract(firstNumber, secondNumber) {
@@ -40,7 +40,7 @@ let secondNumber = "";
 function displayNumbers(number) {
   tempNumber = number;
   if (!isOperatorChosen) {
-    firstNumber = firstNumber.concat(tempNumber);
+    if (firstNumber !== "0") firstNumber = firstNumber.concat(tempNumber);
     if (resultPath.textContent === "0") resultPath.textContent = "";
     resultPath.textContent += tempNumber;
   } else {
@@ -60,9 +60,16 @@ function displayOperator(newOperator) {
 }
 
 function displayResult() {
-  const result = operate(operator, firstNumber, secondNumber);
+  let result = "";
+  if (secondNumber === "") {
+    if (firstNumber === "") result = "0";
+    else result = firstNumber;
+  } else {
+    result = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
+  }
   resultPath.textContent = result;
   isOperatorChosen = false;
+  operator = "";
   firstNumber = result.toString();
   secondNumber = "";
   console.log(firstNumber);
