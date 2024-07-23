@@ -46,6 +46,7 @@ function displayNumbers(number) {
 function displayOperator(newOperator) {
   if (firstNumber === "") firstNumber = "0";
   if (!isOperatorChosen) {
+    tempOperator = newOperator;
     operator = newOperator;
     resultPath.textContent += operator;
     isOperatorChosen = true;
@@ -55,6 +56,9 @@ function displayOperator(newOperator) {
     resultPath.textContent =
       currentResult.slice(0, currentResult.length - 1) + operator;
     isOperatorChosen = true;
+  } else if (isOperatorChosen && firstNumber && secondNumber) {
+    tempOperator = newOperator;
+    displayResultAfterOperator();
   }
 }
 
@@ -88,13 +92,18 @@ function reverseFirstNumber() {
     else firstNumber = "-".concat(firstNumber);
     resultPath.textContent = firstNumber;
   }
+}
 
-  console.log("halo");
+function displayResultAfterOperator() {
+  displayResult();
+  displayOperator(tempOperator);
+  tempOperator = "";
 }
 
 const resultPath = document.querySelector("#result p");
 let isOperatorChosen = false;
 let operator = "";
+let tempOperator = "";
 let tempNumber = "";
 let firstNumber = "";
 let secondNumber = "";
