@@ -67,10 +67,14 @@ function displayResult() {
   if (secondNumber === "") {
     if (firstNumber === "") result = "0";
     else result = firstNumber;
+  } else if (operator === "/" && secondNumber === "0") {
+    alert("You can't divide by 0!!!");
+    result = 0;
   } else {
-    result = operate(operator, parseInt(firstNumber), parseInt(secondNumber));
+    result = operate(operator, Number(firstNumber), Number(secondNumber));
   }
-  resultPath.textContent = result;
+  if (Number.isInteger(result)) resultPath.textContent = result;
+  else resultPath.textContent = Math.round(result * 100) / 100;
   isOperatorChosen = false;
   operator = "";
   firstNumber = result.toString();
