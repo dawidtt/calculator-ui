@@ -79,6 +79,8 @@ function displayResult() {
   operator = "";
   firstNumber = result.toString();
   secondNumber = "";
+  isFirstDecimal = false;
+  isSecondDecimal = false;
 }
 
 function clearResult() {
@@ -88,6 +90,8 @@ function clearResult() {
   tempNumber = "";
   firstNumber = "";
   secondNumber = "";
+  isFirstDecimal = false;
+  isSecondDecimal = false;
 }
 
 function reverseFirstNumber() {
@@ -104,6 +108,26 @@ function displayResultAfterOperator() {
   tempOperator = "";
 }
 
+function displayDecimal() {
+  if (firstNumber !== "" && isOperatorChosen === false && !isFirstDecimal) {
+    resultPath.textContent += ".";
+    isFirstDecimal = true;
+    firstNumber = "0.";
+  } else if (isOperatorChosen === false && !isFirstDecimal) {
+    resultPath.textContent += ".";
+    isFirstDecimal = true;
+    firstNumber += ".";
+  } else if (
+    secondNumber !== "" &&
+    isOperatorChosen === true &&
+    !isSecondDecimal
+  ) {
+    resultPath.textContent += ".";
+    isSecondDecimal = true;
+    secondNumber += ".";
+  }
+}
+
 const resultPath = document.querySelector("#result p");
 let isOperatorChosen = false;
 let operator = "";
@@ -111,6 +135,8 @@ let tempOperator = "";
 let tempNumber = "";
 let firstNumber = "";
 let secondNumber = "";
+let isFirstDecimal = false;
+let isSecondDecimal = false;
 
 const numbersNodeList = document.querySelectorAll(".number");
 
@@ -138,3 +164,6 @@ acBtnPath.addEventListener("click", clearResult);
 
 const reverseBtnPath = document.querySelector(".reverse");
 reverseBtnPath.addEventListener("click", reverseFirstNumber);
+
+const commaPath = document.querySelector(".comma");
+commaPath.addEventListener("click", displayDecimal);

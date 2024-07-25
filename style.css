@@ -55,6 +55,7 @@ button.blue {
 button.orange {
   background-color: #36c2ce;
 }
-.zero {
+.zero,
+.ac {
   flex-basis: 50%;
 }
