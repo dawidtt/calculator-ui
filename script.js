@@ -37,6 +37,7 @@ function displayNumbers(number) {
     if (firstNumber !== "0") firstNumber = firstNumber.concat(tempNumber);
     if (resultPath.textContent === "0") resultPath.textContent = "";
     resultPath.textContent += tempNumber;
+    firstNumber = resultPath.textContent;
   } else {
     secondNumber = secondNumber.concat(tempNumber);
     resultPath.textContent += tempNumber;
@@ -73,14 +74,20 @@ function displayResult() {
   } else {
     result = operate(operator, Number(firstNumber), Number(secondNumber));
   }
-  if (Number.isInteger(result)) resultPath.textContent = result;
-  else resultPath.textContent = Math.round(result * 100) / 100;
-  isOperatorChosen = false;
-  operator = "";
-  firstNumber = result.toString();
-  secondNumber = "";
+
   isFirstDecimal = false;
   isSecondDecimal = false;
+
+  if (Number.isInteger(Number(result))) resultPath.textContent = result;
+  else {
+    resultPath.textContent = Math.round(result * 100) / 100;
+    isFirstDecimal = true;
+  }
+  isOperatorChosen = false;
+  operator = "";
+  if (result === 0) firstNumber = "";
+  else firstNumber = result.toString();
+  secondNumber = "";
 }
 
 function clearResult() {
@@ -109,11 +116,15 @@ function displayResultAfterOperator() {
 }
 
 function displayDecimal() {
-  if (firstNumber !== "" && isOperatorChosen === false && !isFirstDecimal) {
+  if (firstNumber === "" && isOperatorChosen === false && !isFirstDecimal) {
     resultPath.textContent += ".";
     isFirstDecimal = true;
     firstNumber = "0.";
-  } else if (isOperatorChosen === false && !isFirstDecimal) {
+  } else if (
+    firstNumber !== "" &&
+    isOperatorChosen === false &&
+    !isFirstDecimal
+  ) {
     resultPath.textContent += ".";
     isFirstDecimal = true;
     firstNumber += ".";
